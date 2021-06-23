@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Список ингредиентов</title>
+</head>
+<body>
+<h1 style="text-align:center">
+    Список покупок
+</h1>
+<br>
+<h3 style="text-align: left">
+    Для приготовления следующих рецептов:
+</h3>
+
+<ul>
+    {% for recipe in recipes_list %}
+        <li style="align-content: normal">
+            {{ recipe }}
+        </li>
+    {% endfor %}
+</ul>
+<br>
+<h3 style="text-align: left">
+    необходимо приобрести:
+</h3>
+<ol>
+    {% for ingredient in ingredients %}
+        <li style="align-content: normal">
+            {{ ingredient.ingredients__title }} {{ ingredient.total_quantity }} {{ ingredient.ingredients__dimension }}
+        </li>
+    {% endfor %}
+</ol>
+</body>
+</html>

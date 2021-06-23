@@ -1,0 +1,48 @@
+<div class="card" data-id="{{ recipe.id }}">
+    <img src="{{ recipe.image.url }}" alt="{{ recipe.name }}" class="card__image">
+    <div class="card__body">
+        <a class="card__title link" href="{% url 'recipe' recipe.id  %}" >{{ recipe.name }}</a>
+
+        <ul class="card__items">
+            {% include 'foodgram/includes/tag.html' %}
+        </ul>
+
+        <div class="card__items card__items_column">
+            <p class="card__text">
+                <span class="icon-time"></span>
+                {{ recipe.cooking_time }} мин.
+            </p>
+            <p class="card__text">
+                <span class="icon-user"></span>
+                <a href="{% url 'profile' recipe.author.username %}" style="color: black">
+                    {% firstof recipe.author.get_full_name recipe.author.username %}
+                </a>
+            </p>
+        </div>
+    </div>
+    <div class="card__footer">
+        {% if user.is_authenticated %}
+            {% if recipe.is_purchase %}
+                <button class="button button_style_light-blue-outline" name="purchases">
+                    <span class="icon-check button__icon"></span>
+                    Рецепт добавлен
+                </button>
+            {% else %}
+                <button class="button button_style_light-blue" name="purchases" data-out>
+                    <span class="icon-plus button__icon"></span>
+                    Добавить в покупки
+                </button>
+            {% endif %}
+            {% if recipe.is_favorite %}
+                <button class="button button_style_none" name="favorites">
+                    <span class="icon-favorite icon-favorite_active"></span>
+                </button>
+            {% else %}
+                <button class="button button_style_none" name="favorites" data-out>
+                    <span class="icon-favorite"></span>
+                </button>
+            {% endif %}
+
+        {% endif %}
+    </div>
+</div>

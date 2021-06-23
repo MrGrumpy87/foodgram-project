@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load static %}
+{% csrf_token %}
+
+{% block page_title %}
+    {{ page_title }}
+{% endblock %}
+
+{% block static_css %}
+    <link rel="stylesheet" href="{% static 'pages/index.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="main__header">
+        <h1 class="main__title">{{ page_title }}</h1>
+        {% include 'foodgram/includes/tags_filter.html' with tags=tags %}
+    </div>
+    <div class="card-list">
+        {% for recipe in page_obj %}
+            {% include 'foodgram/includes/recipe_card.html' with recipe=recipe %}
+        {% endfor %}
+    </div>
+
+    {% if page_obj.has_other_pages %}
+        {% include 'foodgram/includes/paginator.html' with items=page_obj paginator=paginator %}
+    {% endif %}
+{% endblock content %}
+
+{% block static_js %}
+    <script src="{% static 'js/config/config.js' %}"></script>
+
+    <script src="{% static 'js/api/Api.js' %}"></script>
+
+    <script src="{% static 'js/components/MainCards.js' %}"></script>
+    <script src="{% static 'js/components/Purchases.js' %}"></script>
+    <script src="{% static 'js/components/Favorites.js' %}"></script>
+    <script src="{% static 'js/components/CardList.js' %}"></script>
+    <script src="{% static 'js/components/Header.js' %}"></script>
+
+    <script src="{% static 'js/templates/foodgram/favorite.js' %}"></script>
+{% endblock static_js %}

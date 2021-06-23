@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% load static %}
+{% csrf_token %}
+
+{% block page_title %}
+    {{ page_title }}
+{% endblock %}
+
+
+{% block static_css %}
+    <link rel="stylesheet" href="{% static 'pages/shopList.css' %}">
+{% endblock %}
+
+
+{% block content %}
+    <div class="main__header">
+        <h1 class="main__title">{{ page_title }}</h1>
+    </div>
+    <div class="card-list card-list_column">
+        <ul class="shopping-list">
+            {% for purchase in page_obj %}
+                <li class="shopping-list__item" data-id="{{ purchase.recipe.id }}">
+                    <div class="recipe recipe_reverse">
+                        <img src="{{ purchase.recipe.image.url }}" alt="{{ purchase.recipe.name }}"
+                             class="recipe__image recipe__image_big">
+                        <h3 class="recipe__title">
+                            <a class="link" href="{% url 'recipe' purchase.recipe.id %}" style="color: black">
+                                {{ purchase.recipe.name }}
+                            </a>
+                        </h3>
+                        <p class="recipe__text">
+                            <span class="icon-time"></span>
+                            {{ purchase.recipe.cooking_time }} мин.
+                        </p>
+                    </div>
+                    <a href="#" class="shopping-list__button link">Удалить</a>
+                </li>
+            {% endfor %}
+        </ul>
+        {% if page_obj.count > 0%}
+        <a href="{% url 'purchases_download' %}">
+            <button class="button button_style_blue">Скачать список</button>
+        </a>
+        {% endif %}
+    </div>
+{#    {% if page_obj.has_other_pages %}#}
+{#        {% include 'foodgram/includes/paginator.html' with items=page_obj paginator=paginator %}#}
+{#    {% endif %}#}
+{% endblock content %}
+
+
+{% block static_js %}
+    <script src="{% static 'js/config/config.js' %}"></script>
+
+    <script src="{% static 'js/api/Api.js' %}"></script>
+
+    <script src="{% static 'js/components/ShopList.js' %}"></script>
+    <script src="{% static 'js/components/Header.js' %}"></script>
+
+    <script src="{% static 'js/templates/foodgram/shopList.js' %}"></script>
+{% endblock static_js %}

@@ -1,0 +1,26 @@
+[
+  {
+    "model": "foodgram.tag",
+    "fields": {
+      "name": "Завтрак",
+      "slug": "breakfast",
+      "color": "orange"
+    }
+  },
+  {
+    "model": "foodgram.tag",
+    "fields": {
+      "name": "Обед",
+      "slug": "lunch",
+      "color": "green"
+    }
+  },
+  {
+    "model": "foodgram.tag",
+    "fields": {
+      "name": "Ужин",
+      "slug": "dinner",
+      "color": "purple"
+    }
+  }
+]

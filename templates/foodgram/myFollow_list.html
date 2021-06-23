@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load user_filters %}
+{% csrf_token %}
+
+{% block page_title %}
+    {{ page_title }}
+{% endblock %}
+
+
+{% block static_css %}
+    <link rel="stylesheet" href="{% static 'pages/myFollow.css' %}">
+{% endblock %}
+
+
+{% block content %}
+    <div class="main__header">
+        <h1 class="main__title">{{ page_title }}</h1>
+    </div>
+    <div class="card-list">
+        {% for subscription in page_obj %}
+            <div class="card-user" data-author="{{ subscription.author.id }}">
+                <div class="card-user__header">
+                    <h2 class="card-user__title">{{ subscription.author }}</h2>
+                </div>
+                <div class="card-user__body">
+                    <ul class="card-user__items">
+                        {% for recipe in subscription.author.recipes.all|slice:":3"%}
+                            <li class="card-user__item">
+                                <div class="recipe">
+                                    <img src="{{ recipe.image.url }}" alt="{{ recipe.name }}"
+                                         class="recipe__image">
+                                    <h3 class="recipe__title">
+                                        <a class="link" href="{% url 'recipe' recipe.id %}" style="color: black">
+                                            {{ recipe.name }}
+                                        </a>
+                                    </h3>
+                                    <p class="recipe__text">
+                                        <span class="icon-time"></span>
+                                        {{ recipe.cooking_time }} мин.
+                                    </p>
+                                </div>
+                            </li>
+                        {% endfor %}
+                        <li class="card-user__item">
+                            <a href="{% url 'profile' subscription.author %}" class="card-user__link link">Еще {{ subscription.author.recipes.count|recipes_all }} рецептов...</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="card-user__footer">
+                    <button class="button button_style_light-blue button_size_auto" name="subscribe">Отписаться</button>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+    {% if page_obj.has_other_pages %}
+        {% include 'foodgram/includes/paginator.html' with items=page_obj paginator=paginator %}
+    {% endif %}
+{% endblock content %}
+
+
+{% block static_js %}
+    <script src="{% static 'js/config/config.js' %}"></script>
+
+    <script src="{% static 'js/api/Api.js' %}"></script>
+
+    <script src="{% static 'js/components/MainCards.js' %}"></script>
+    <script src="{% static 'js/components/MyFollow.js' %}"></script>
+    <script src="{% static 'js/components/Subscribe.js' %}"></script>
+    <script src="{% static 'js/components/Header.js' %}"></script>
+
+    <script src="{% static 'js/templates/foodgram/myFollow.js' %}"></script>
+{% endblock static_js %}

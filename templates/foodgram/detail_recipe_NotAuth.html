@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block page_title %}
+    {{ page_title }}
+{% endblock %}
+
+
+{% block static_css %}
+    <link rel="stylesheet" href="{% static 'pages/single.css' %}">
+{% endblock %}
+
+
+{% block content %}
+    <div class="single-card" data-id="{{ recipe.id }}" data-author="{{ recipe.author }}">
+        <img src="{{ recipe.image.url }}" alt="{{ recipe.name }}" class="single-card__image">
+        <div class="single-card__info">
+            <div class="single-card__header-info">
+                <h1 class="single-card__title">{{ recipe.name }}</h1>
+                <div class="single-card__favorite"></div>
+            </div>
+
+            <ul class="single-card__items">
+                {% include 'foodgram/includes/tag.html' %}
+            </ul>
+
+            <div class="single-card__items single-card__items_column">
+                <p class="single-card__text">
+                    <span class="icon-time"></span>
+                    {{ recipe.cooking_time }} мин.
+                </p>
+                <ul class="single-card__items">
+                    <li class="single-card__item">
+                        <p class="single-card__text">
+                            <span class="icon-user"></span>
+                            <a class="link" href="{% url 'profile' recipe.author.username %}" style="...">
+                                {% firstof recipe.author.get_full_name recipe.author.username %}
+                            </a>
+                        </p>
+                    </li>
+                </ul>
+            </div>
+            <ul class="single-card__items">
+                <li class="single-card__item"></li>
+            </ul>
+            <div class="single-card__section">
+                <h3 class="single-card__section-title">Ингридиенты:</h3>
+                <div class="single-card__items single-card__items_column">
+                    {% for recipe_ingredient in recipe.recipeingredient_set.all%}
+                        <p class=" single-card__section-item">
+                            {{ recipe_ingredient.ingredient.title }} - {{ recipe_ingredient.amount }}
+                            {{ recipe_ingredient.ingredient.dimension }}
+                        </p>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="single-card__section">
+                <h3 class="single-card__section-title">Описание:</h3>
+                <p class=" single-card__section-text">
+                    {{ recipe.description|linebreaksbr }}
+                </p>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+
+
+{% block static_js %}
+    <script src="{% static 'js/config/config.js' %}"></script>
+
+    <script src="{% static 'js/api/Api.js' %}"></script>
+
+    <script src="{% static 'js/components/MainCards.js' %}"></script>
+    <script src="{% static 'js/components/Purchases.js' %}"></script>
+    <script src="{% static 'js/components/SingleCard.js' %}"></script>
+    <script src="{% static 'js/components/Header.js' %}"></script>
+
+    <script src="{% static 'js/templates/foodgram/singlePageNotAuth.js' %}"></script>
+{% endblock static_js %}

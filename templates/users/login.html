@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block page_title %}
+    {{ title }}
+{% endblock %}
+
+
+{% block static_css %}
+    <link rel="stylesheet" href="{% static 'pages/form.css' %}">
+{% endblock %}
+
+
+{% block content %}
+    <div class="main__header">
+        <h1 class="main__title">Войти на сайт</h1>
+    </div>
+    <div class="form-container">
+        <form class="form" method="POST" action="{% url 'login' %}">
+            {% csrf_token %}
+            {% for field in form %}
+                <div class="form__group" aria-required='{% if field.field.required %}true{% else %}false{% endif %}'>
+                    <label for="{{ field.id_for_label }}" class="form__label">
+                        {{ field.label }}
+                    </label>
+                    <div class="form__field-group">
+                        <input type='{% if "password" in field.html_name %}password{% else %}text{% endif %}'
+                               name="{{ field.html_name }}" id="{{ field.id_for_label }}" class="form__input">
+                        {% if form.errors and field.html_name == 'password' %}
+                            <div class="alert alert-danger" role="alert">
+                                    <span class="form__error">
+                                        <ul>
+                                            <li>Имя пользователя или пароль не совпадают. Введите правильные данные.</li>
+                                        </ul>
+                                    </span>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+            <div class="form__footer">
+                <button type="submit" class="button button_style_blue">Войти</button>
+                <a class="form__forgot-link" href="{% url 'password_reset' %}">Забыли пароль?</a>
+            </div>
+        </form>
+    </div>
+{% endblock %}
