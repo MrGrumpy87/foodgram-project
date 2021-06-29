@@ -74,9 +74,9 @@ class RecipeForm(forms.ModelForm):
             recipe = super().save(commit=False)
             if commit:
                 recipe.save()
-                b = recipe.recipe_ingredients.count()
+                recipe_ingredients_count = recipe.recipe_ingredients.count()
                 recipe.tags.set(self.cleaned_data.get('tags'))
-                if b > 0:
+                if recipe_ingredients_count > 0:
                     recipe.recipe_ingredients.all().delete()
                 get_ingredient(self, recipe)
             return recipe

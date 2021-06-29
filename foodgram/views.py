@@ -16,26 +16,6 @@ from foodgram.utils import paginator_on_page
 User = get_user_model()
 
 
-def page_not_found(request, exception):
-    title = 'Ошибка 404'
-    return render(
-        request,
-        'misc/404.html',
-        {'path': request.path, 'title': title},
-        status=404
-    )
-
-
-def server_error(request):
-    title = 'Ошибка 500'
-    return render(
-        request,
-        'misc/500.html',
-        {'title': title},
-        status=500
-    )
-
-
 def index(request):
     page_title = 'Рецепты'
     paginator_by = RECIPE_IN_PAGE
@@ -84,10 +64,10 @@ def purchases(request):
 def purchases_file(request):
     recipes_list = Recipe.objects.filter(purchases__user=request.user)
     ingredients = recipes_list.order_by(
-        "ingredients__title"
+        'ingredients__title'
     ).values(
-        "ingredients__title",
-        "ingredients__dimension"
+        'ingredients__title',
+        'ingredients__dimension'
     ).annotate(total_quantity=Sum('recipe_ingredients__amount'))
     rendered = render_to_string(
         'foodgram/purchases_download.html',
@@ -195,8 +175,3 @@ def recipe_delete(request, recipe_id):
     recipe = get_object_or_404(Recipe, author=request.user, id=recipe_id)
     recipe.delete()
     return redirect('index')
-
-
-def about(request):
-    template_page = 'about.html'
-    return render(request, template_page)

@@ -23,7 +23,7 @@ def recipe_annotate(recipe_list, login_user):
 
 
 def paginator_on_page(request, obj_list, paginator_by, page_title):
-    tags_on = request.GET.getlist("tags", [])
+    tags_on = request.GET.getlist('tags', [])
     if tags_on:
         obj_list = obj_list.filter(tags__slug__in=tags_on).distinct()
     page_number = request.GET.get('page')
@@ -47,10 +47,10 @@ def get_ingredient(form, recipe):
     ingredients = form.cleaned_data.get('nameIngredients')
     amounts = form.cleaned_data.get('valueIngredient')
     recipe_ingredients_obj = []
-    for i, a in zip(ingredients, amounts):
+    for ingredient, amount in zip(ingredients, amounts):
         recipe_ingredients_obj.append(RecipeIngredient(
             recipe=recipe,
-            ingredient=i,
-            amount=a
+            ingredient=ingredient,
+            amount=amount
         ))
     RecipeIngredient.objects.bulk_create(recipe_ingredients_obj)

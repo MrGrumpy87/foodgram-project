@@ -1,5 +1,5 @@
 # foodgram-project
-%foodgram-project%
+
 
 ## Необходимые инструменты
 * [pip](https://pypi.org/project/pip/)

@@ -4,10 +4,10 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path
 
-from foodgram import views
+from config import views
 
-handler404 = 'foodgram.views.page_not_found' # noqa
-handler500 = 'foodgram.views.server_error' # noqa
+handler404 = 'views.page_not_found' # noqa
+handler500 = 'views.server_error' # noqa
 
 urlpatterns = [
     path('admin/', admin.site.urls),
