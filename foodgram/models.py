@@ -14,20 +14,33 @@ class Ingredient(models.Model):
         max_length=200,
         verbose_name='Единицы измерения',
     )
-
+    
     class Meta:
-        ordering = ('title', )
+        ordering = ('title',)
         verbose_name = 'Ингредиенты'
         verbose_name_plural = 'Ингредиенты'
-
+    
     def __str__(self):
         return f'{self.title} ({self.dimension})'
 
 
 class Tag(models.Model):
-    name = models.CharField(max_length=20)
-    slug = models.CharField(max_length=20)
-    color = models.CharField(max_length=20)
+    name = models.CharField(
+        max_length=20,
+        verbose_name='Имя'
+    )
+    slug = models.CharField(
+        max_length=20,
+        verbose_name='Слаг'
+    )
+    color = models.CharField(
+        max_length=20,
+        verbose_name='Цвет'
+    )
+    
+    class Meta:
+        verbose_name = 'Тэг'
+        verbose_name_plural = 'Тэги'
 
 
 class Recipe(models.Model):
@@ -65,13 +78,13 @@ class Recipe(models.Model):
         auto_now_add=True,
         db_index=True
     )
-    tag = models.ManyToManyField(Tag)
-
+    tags = models.ManyToManyField(Tag)
+    
     class Meta:
-        ordering = ('-pub_date', )
+        ordering = ('-pub_date',)
         verbose_name = 'Рецепт'
         verbose_name_plural = 'Рецепты'
-
+    
     def __str__(self):
         return self.name
 
@@ -87,19 +100,19 @@ class RecipeIngredient(models.Model):
         Ingredient,
         on_delete=models.CASCADE,
         verbose_name='Ингредиенты',
-        related_name='recipeIngredients'
+        related_name='recipe_ingredients'
     )
     recipe = models.ForeignKey(
         Recipe,
         on_delete=models.CASCADE,
         verbose_name='Рецепт',
-        related_name='recipeIngredients'
+        related_name='recipe_ingredients'
     )
-
+    
     class Meta:
         verbose_name = 'Ингредиент в рецепте'
         verbose_name_plural = 'Ингредиенты в рецептах'
-
+    
     def __str__(self):
         return f'{self.ingredient} в {self.recipe}'
 
@@ -115,8 +128,9 @@ class Favorite(models.Model):
         Recipe,
         on_delete=models.CASCADE,
         related_name='favorites',
+        verbose_name='Рецепт',
     )
-
+    
     class Meta:
         constraints = [
             models.UniqueConstraint(
@@ -126,7 +140,7 @@ class Favorite(models.Model):
         ]
         verbose_name = 'Объект избранного'
         verbose_name_plural = 'Оъекты избранного'
-
+    
     def __str__(self):
         return f'Избранный {self.recipe} у {self.user}'
 
@@ -144,7 +158,7 @@ class Subscription(models.Model):
         related_name='subscriptions_author',
         verbose_name='Автор'
     )
-
+    
     class Meta:
         ordering = ('author',)
         constraints = [
@@ -155,7 +169,7 @@ class Subscription(models.Model):
         ]
         verbose_name = 'Объект подписки'
         verbose_name_plural = 'Оъекты подписки'
-
+    
     def __str__(self):
         return f'Пользователь {self.user} подписан на {self.author}'
 
@@ -171,9 +185,9 @@ class Purchase(models.Model):
         Recipe,
         on_delete=models.CASCADE,
         related_name='purchases',
-        verbose_name='Рецепт'
+        verbose_name='Рецепт',
     )
-
+    
     class Meta:
         constraints = [
             models.UniqueConstraint(
@@ -183,6 +197,6 @@ class Purchase(models.Model):
         ]
         verbose_name = 'Объект корзины'
         verbose_name_plural = 'Оъекты корзины'
-
+    
     def __str__(self):
         return f'{self.recipe} в корзине у {self.user}'

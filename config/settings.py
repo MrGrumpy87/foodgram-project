@@ -154,3 +154,6 @@ DEFAULT_FROM_EMAIL = '*************'
 EMAIL_HOST_USER = '*************'
 EMAIL_HOST_PASSWORD = '*************'
 EMAIL_USE_SSL = True
+
+
+RECIPE_IN_PAGE = 6

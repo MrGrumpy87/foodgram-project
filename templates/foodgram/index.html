@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
-
+{% csrf_token %}
 
 {% block page_title %}
     {{ page_title }}
@@ -36,9 +36,13 @@
     <script src="{% static 'js/api/Api.js' %}"></script>
 
     <script src="{% static 'js/components/MainCards.js' %}"></script>
-    <script src="{% static 'js/components/Purchases.js' %}"></script>
     <script src="{% static 'js/components/CardList.js' %}"></script>
     <script src="{% static 'js/components/Header.js' %}"></script>
-
-    <script src="{% static 'js/templates/foodgram/indexNotAuth.js' %}"></script>
-{% endblock %}
+    {% if user.is_authenticated %}
+        <script src="{% static 'js/components/Purchases.js' %}"></script>
+        <script src="{% static 'js/components/Favorites.js' %}"></script>
+        <script src="{% static 'js/templates/foodgram/indexAuth.js' %}"></script>
+    {% else %}
+        <script src="{% static 'js/templates/foodgram/indexNotAuth.js' %}"></script>
+    {% endif %}
+{% endblock static_js %}

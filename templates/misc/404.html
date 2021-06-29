@@ -14,9 +14,10 @@
 
 {% block content %}
     <div class="custom-center-block">
-            <p class="custom-text-block">Вы вышли из своей учётной записи. Ждём вас снова!</p>
+            <h1>{{ title }}</h1>
+            <p class="custom-text-block">Страница <code>{{ path }}</code> не найдена.</p>
             <div class="custom-button-block">
-                <a class="button button_style_blue" href="{% url 'index' %}">OK</a>
+                <a class="button button_style_blue" href="{% url 'index' %}">Вернуться на главную</a>
             </div>
     </div>
 {% endblock %}

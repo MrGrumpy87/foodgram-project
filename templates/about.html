@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block page_title %}
+    {% if request.resolver_match.url_name == 'about-author' %}
+        <p class="custom-text-block">Об авторе</p>
+    {% elif request.resolver_match.url_name == 'about-tech' %}
+        <p class="custom-text-block">Технологии</p>
+    {% endif %}"
+{% endblock %}
+
+
+{% block static_css %}
+    <link rel="stylesheet" href="{% static 'pages/index.css' %}">
+{% endblock %}
+
+
+{% block content %}
+    <div class="custom-center-block">
+            {% if request.resolver_match.url_name == 'about-author' %}
+                <p class="custom-text-block">Студент факультета Бэкенд. "Когорта 11"</p>
+            {% elif request.resolver_match.url_name == 'about-tech' %}
+                <p class="custom-text-block">Используемые технологии: Django, JS</p>
+            {% endif %}
+            <div class="custom-button-block">
+                <a class="button button_style_blue" href="{% url 'index' %}">На главную</a>
+            </div>
+    </div>
+{% endblock %}
