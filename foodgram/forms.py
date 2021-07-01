@@ -3,14 +3,14 @@ from django.db import transaction
 from django.forms import CheckboxSelectMultiple
 from django.shortcuts import get_object_or_404
 
-from foodgram.models import Recipe, Ingredient, Tag
+from foodgram.models import Ingredient, Recipe, Tag
 from foodgram.utils import get_ingredient
 
 
 class RecipeForm(forms.ModelForm):
     tags = forms.ModelMultipleChoiceField(queryset=Tag.objects.all(),
                                           widget=CheckboxSelectMultiple())
-    
+
     class Meta:
         model = Recipe
         fields = (
@@ -33,12 +33,12 @@ class RecipeForm(forms.ModelForm):
                 attrs={'class': 'form__file-button'}
             )
         }
-    
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['ingredients'].required = False
         self.fields['tags'].required = False
-    
+
     def clean(self):
         cleaned_data = super().clean()
         tags = self.fields['tags'].choices.queryset.all()
@@ -50,7 +50,7 @@ class RecipeForm(forms.ModelForm):
             self._errors['name'] = self.error_class(
                 ['Необходимо выбрать время приема пищи'])
         cleaned_data['tags'] = tags_on
-        
+
         ingredients_obj = []
         amount_list = []
         for key, value in self.data.items():
@@ -68,7 +68,7 @@ class RecipeForm(forms.ModelForm):
         cleaned_data['nameIngredients'] = ingredients_obj
         cleaned_data['valueIngredient'] = amount_list
         return cleaned_data
-    
+
     def save(self, commit=True):
         with transaction.atomic():
             recipe = super().save(commit=False)

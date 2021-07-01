@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from foodgram.models import Ingredient, Favorite, Subscription, Purchase
+from foodgram.models import Favorite, Ingredient, Purchase, Subscription
 
 
 class IngredientSerializer(serializers.ModelSerializer):
