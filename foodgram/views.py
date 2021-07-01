@@ -1,16 +1,16 @@
 import io
 
 import pdfkit
+from config.settings import RECIPE_IN_PAGE
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.db.models import Sum
 from django.http import FileResponse
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import get_object_or_404, redirect, render
 from django.template.loader import render_to_string
 
-from config.settings import RECIPE_IN_PAGE
 from foodgram.forms import RecipeForm
-from foodgram.models import Recipe, Favorite, Subscription, Purchase
+from foodgram.models import Favorite, Purchase, Recipe, Subscription
 from foodgram.utils import paginator_on_page
 
 User = get_user_model()
@@ -31,7 +31,6 @@ def favorites(request):
     paginator_by = RECIPE_IN_PAGE
     template_page = 'foodgram/favorite_list.html'
     favorites_recipes = Recipe.objects.filter(favorites__user=request.user)
-    
     context = paginator_on_page(request, favorites_recipes,
                                 paginator_by, page_title)
     return render(request, template_page, context)

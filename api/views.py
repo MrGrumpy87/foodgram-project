@@ -1,9 +1,9 @@
 from rest_framework import filters, mixins, viewsets
 
 from api.mixins import MixinView
-from api.serializers import (IngredientSerializer, FavoriteSerializer,
-                             SubscriptionSerializer, PurchaseSerializer)
-from foodgram.models import Ingredient, Favorite, Subscription, Purchase
+from api.serializers import (FavoriteSerializer, IngredientSerializer,
+                             PurchaseSerializer, SubscriptionSerializer)
+from foodgram.models import Favorite, Ingredient, Purchase, Subscription
 
 
 class IngredientViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):

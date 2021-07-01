@@ -1,7 +1,7 @@
 from django.core.paginator import Paginator
 from django.db.models import Exists, OuterRef
 
-from foodgram.models import Purchase, Favorite, RecipeIngredient, Tag, Recipe
+from foodgram.models import Favorite, Purchase, Recipe, RecipeIngredient, Tag
 
 
 def recipe_annotate(recipe_list, login_user):
