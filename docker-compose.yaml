@@ -12,7 +12,7 @@ services:
       - ./.env
       
   web:
-    build: .
+    image: mrgrumpy87/foodgram-project:latest
     restart: always
     ports:
       - "8000:8000" 
