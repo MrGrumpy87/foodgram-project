@@ -1,5 +1,8 @@
 # foodgram-project
 
+url: http://84.201.168.186/
+superuser: root
+password: root
 
 ## Необходимые инструменты
 * [pip](https://pypi.org/project/pip/)
