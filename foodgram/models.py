@@ -16,6 +16,12 @@ class Ingredient(models.Model):
     )
 
     class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=('title', 'dimension'),
+                name='unique_ingredient_amount'
+            )
+        ]
         ordering = ('title',)
         verbose_name = 'Ингредиенты'
         verbose_name_plural = 'Ингредиенты'
@@ -116,12 +122,6 @@ class RecipeIngredient(models.Model):
     )
 
     class Meta:
-        constraints = [
-            models.UniqueConstraint(
-                fields=('ingredient', 'amount'),
-                name='unique_ingredient_amount'
-            )
-        ]
         verbose_name = 'Ингредиент в рецепте'
         verbose_name_plural = 'Ингредиенты в рецептах'
 
